@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import FeaturedDestination from "./components/FeaturedDestination";
+import Footer from "./components/Footer";
 
 const App = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/rooms" element={<FeaturedDestination />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 };

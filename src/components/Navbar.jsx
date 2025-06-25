@@ -63,11 +63,16 @@ const Navbar = () => {
     >
       {/* Logo */}
       <Link to="/">
-        <img
-          src={assets.logo}
+        {/* <img
+          src={StayFinder}
           alt="logo"
-          className={`h-9 ${isScrolled && "invert opacity-80"}`}
-        />
+          className={`h-20  ${isScrolled && "invert opacity-80"}`}
+        /> */}
+        <span
+          className={`text-3xl md:text-4xl lg:text-5xl font-extrabold italic tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 drop-shadow-lg`}
+        >
+          Stayfinder
+        </span>
       </Link>
 
       {/* Desktop Nav */}
