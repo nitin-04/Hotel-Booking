@@ -3,15 +3,15 @@ import { assets } from "../assets/assets";
 
 const Footer = () => {
   return (
-    <div className=" bg-[#F6F9FC] text-gray-500/80 pt-8 px-6 md:px-16 lg:px-24 xl:px-32">
+    <div className="bg-[#F6F9FC] text-gray-500/80 pt-8 px-6 md:px-16 lg:px-24 xl:px-32">
       <div className="flex flex-wrap justify-between gap-12 md:gap-6">
         <div className="max-w-80">
           <span className="font-bold text-2xl text-black block mb-2">
             StayFinder
           </span>
           <p className="text-sm">
-            Discover the world's most extraordinary places to stay, from
-            boutique hotels to luxury villas and private islands,{" "}
+            Your gateway to unforgettable stays — from hidden mountain gems to
+            beachside escapes. Find your next favorite place.
           </p>
           <div className="flex items-center gap-3 mt-4">
             <img
@@ -74,7 +74,8 @@ const Footer = () => {
         <div className="max-w-80">
           <p className="font-serif text-lg text-gray-800">STAY UPDATED</p>
           <p className="mt-3 text-sm">
-            Subscribe to our newsletter for inspiration and special offers.
+            Be the first to explore new destinations, handpicked stays, and
+            exclusive deals straight to your inbox.
           </p>
           <div className="flex items-center mt-4">
             <input
@@ -83,7 +84,6 @@ const Footer = () => {
               placeholder="Your email"
             />
             <button className="flex items-center justify-center bg-black h-9 w-9 aspect-square rounded-r">
-              {/* Arrow icon */}
               <img
                 src={assets.arrowIcon}
                 alt="arrowIcon"
@@ -93,9 +93,13 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
       <hr className="border-gray-300 mt-8" />
       <div className="flex flex-col md:flex-row gap-2 items-center justify-between py-5">
-        <p>© {new Date().getFullYear()} Brand. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} StayFinder. Crafted for curious
+          explorers.
+        </p>
         <ul className="flex items-center gap-4">
           <li>
             <a href="#">Privacy</a>

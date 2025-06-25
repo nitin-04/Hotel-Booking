@@ -8,8 +8,8 @@ const ExclusiveOffers = () => {
       <div className="flex flex-col items-center md:flex-row justify-between  w-full">
         <Title
           align="left"
-          title="Exclusive Offers"
-          subTitle="Take advantage our Limited time offers and special packages to enhance your stay and create unforgattable memory"
+          title="Handpicked Deals Just for You"
+          subTitle="Unlock limited-time offers and exclusive packages designed to elevate your getaway — because every stay deserves a special touch."
         />
         <button className="group flex items-center gap-2 font-medium cursor-pointer max-md:mt-12">
           View All Offers

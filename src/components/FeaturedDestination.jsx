@@ -9,7 +9,10 @@ const FeaturedDestination = () => {
 
   return (
     <div className="flex flex-col items-center px-6 py-20 md:px-16 lg:px-24 bg-slate-50">
-      <Title title="Featured Destination" subTitle="Discover " />
+      <Title
+        title="Featured Destinations"
+        subTitle="Discover breathtaking places handpicked to inspire your next unforgettable escape."
+      />
 
       <div className="flex flex-wrap items-center justify-center gap-4 mt-20">
         {roomsDummyData.slice(0, 4).map((room, index) => (
