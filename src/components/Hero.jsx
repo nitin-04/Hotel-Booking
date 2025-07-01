@@ -7,11 +7,11 @@ const Hero = () => {
       <p className="bg-fuchsia-600 px-3.5 py-1 rounded-full mt-20 text-sm md:text-base font-medium tracking-wide shadow-md">
         Elevate Your Stay with Unmatched Comfort & Style
       </p>
-      <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mt-4 max-w-xl leading-tight">
+      <h1 className="font-serif text-xl md:text-4xl lg:text-5xl xl:text-5xl font-bold mt-4 max-w-2xl leading-tight">
         Your Next Escape Starts Here — Find the Stay That Feels Like Home
       </h1>
 
-      <p className="text-lg max-w-130 md:text-xl lg:text-2xl xl:text-3xl mt-4">
+      <p className="text-lg max-w-3xl  md:text-xl lg:text-2xl xl:text-3xl mt-4">
         Find the perfect place to unwind, recharge, and make memories that last.
       </p>
 

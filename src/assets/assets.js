@@ -190,7 +190,7 @@ export const hotelDummyData = [
   {
     _id: "67f76393197ac559e4089b72",
     name: "Urbanza Suites",
-    address: "123 Main Road, Sector 23 Colony",
+    address: " Main Road, Sector 23 Colony",
     contact: "+1 (212) 555-6789",
     owner: userDummyData,
     city: "New York",
@@ -223,7 +223,7 @@ export const hotelDummyData = [
   {
     _id: "67f76393197ac559e4089b75",
     name: "Luxe Grand Palace",
-    address: "88 Avenue de Champs, City Center",
+    address: "  Avenue de Champs, City Center",
     contact: "+33 1 2345 6789",
     owner: userDummyData,
     city: "Paris",
@@ -237,7 +237,7 @@ export const hotelDummyData = [
 export const roomsDummyData = [
   {
     _id: "67f7647c197ac559e4089b96",
-    hotel: hotelDummyData,
+    hotel: hotelDummyData[0],
     roomType: "Double Bed",
     pricePerNight: 399,
     amenities: ["Room Service", "Mountain View", "Pool Access"],
@@ -249,7 +249,7 @@ export const roomsDummyData = [
   },
   {
     _id: "67f76452197ac559e4089b8e",
-    hotel: hotelDummyData,
+    hotel: hotelDummyData[1],
     roomType: "Double Bed",
     pricePerNight: 299,
     amenities: ["Room Service", "Mountain View", "Pool Access"],
@@ -261,7 +261,7 @@ export const roomsDummyData = [
   },
   {
     _id: "67f76406197ac559e4089b82",
-    hotel: hotelDummyData,
+    hotel: hotelDummyData[2],
     roomType: "Double Bed",
     pricePerNight: 249,
     amenities: ["Free WiFi", "Free Breakfast", "Room Service"],
@@ -273,7 +273,7 @@ export const roomsDummyData = [
   },
   {
     _id: "67f763d8197ac559e4089b7a",
-    hotel: hotelDummyData,
+    hotel: hotelDummyData[3],
     roomType: "Single Bed",
     pricePerNight: 199,
     amenities: ["Free WiFi", "Room Service", "Pool Access"],

@@ -9,11 +9,12 @@ const StarRating = ({ rating = 4 }) => {
         .fill("")
         .map((_, index) => (
           <img
+            key={index}
             src={
               rating > index ? assets.starIconFilled : assets.starIconOutlined
             }
             alt="star_icon"
-            className="w-4 h4"
+            className="w-4 h-4"
           />
         ))}
     </>
