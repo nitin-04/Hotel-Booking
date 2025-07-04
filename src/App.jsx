@@ -6,6 +6,7 @@ import FeaturedDestination from "./components/FeaturedDestination";
 import Footer from "./components/Footer";
 import AllRooms from "./pages/AllRooms";
 import RoomDetails from "./pages/RoomDetails";
+import MyBooking from "./pages/MyBooking";
 
 const App = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<AllRooms />} />
           <Route path="/rooms/:id" element={<RoomDetails />} />
+          <Route path="/my-bookings" element={<MyBooking />} />
         </Routes>
       </div>
       <Footer />
