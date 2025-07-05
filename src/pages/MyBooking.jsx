@@ -4,6 +4,9 @@ import { assets, userBookingsDummyData } from "../assets/assets";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState(userBookingsDummyData);
+
+  console.log(bookings);
+
   return (
     <div className="py-28 md:pb-35 md:pt-32 px-4 md:px-16 lg:px-24 xl:px-32">
       <Title
@@ -30,7 +33,7 @@ const MyBooking = () => {
               />
               <div className="flex flex-col gap-1.5 max-md:mt-3 min-md:ml-4">
                 <p className="font-serif text-2xl">
-                  {booking.hotel.name}
+                  {booking.hotel[0].name}
                   <span className="font-serif text-sm">
                     {" "}
                     ({booking.room.roomType})
@@ -38,7 +41,7 @@ const MyBooking = () => {
                 </p>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <img src={assets.locationIcon} alt="location-icon" />
-                  <span>{booking.hotel.address}</span>
+                  <span>{booking.hotel[0].address}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <img src={assets.guestsIcon} alt="guest-icon" />
@@ -49,15 +52,14 @@ const MyBooking = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-row md:items-center md:gap-12 mt-3 gap-8">
+            <div className="flex flex-col gap-2 mt-3 md:items-start">
               <div>
                 <p>Check-In:</p>
                 <p className="text-gray-500 text-sm">
                   {new Date(booking.checkInDate).toDateString()}
                 </p>
               </div>
-            </div>
-            <div className="flex flex-row md:items-center md:gap-12 mt-3 gap-8">
+
               <div>
                 <p>Check-Out:</p>
                 <p className="text-gray-500 text-sm">
