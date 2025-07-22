@@ -1,23 +1,88 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  assets,
-  facilityIcons,
-  roomCommonData,
-  roomsDummyData,
-} from "../assets/assets";
+import { facilityIcons, roomCommonData } from "../assets/assets";
 import StarRating from "../components/StarRating";
+import { useAppContext } from "../context/AppContext";
+import { FaLocationDot } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 const RoomDetails = () => {
   const { id } = useParams();
+  const { rooms, getToken, axios, navigate } = useAppContext();
   const [room, setRoom] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [guests, setGuests] = useState(1);
+
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  const checkAvailability = async () => {
+    try {
+      if (checkInDate >= checkOutDate) {
+        toast.error("Check out date must be greater than check in date");
+        return;
+      }
+      const { data } = await axios.post("api/bookings/check-availability", {
+        room: id,
+        checkInDate,
+        checkOutDate,
+      });
+
+      if (data.success) {
+        if (data.isAvailable) {
+          setIsAvailable(true);
+          toast.success("Room is available");
+        } else {
+          setIsAvailable(false);
+          toast.error("Room is not available");
+        }
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+    }
+  };
+
+  const onSubmitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      if (!isAvailable) {
+        return checkAvailability();
+      } else {
+        const { data } = await axios.post(
+          "/api/bookings/book",
+          {
+            room: id,
+            checkInDate,
+            checkOutDate,
+            guests,
+            paymentMethod: "Pay at Hotel",
+          },
+          { headers: { Authorization: `Bearer ${await getToken()}` } }
+        );
+        if (data.success) {
+          toast.success(data.message);
+          navigate("/my-bookings");
+          scrollTo(0, 0);
+        } else {
+          toast.error(data.message);
+        }
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   useEffect(() => {
-    const room = roomsDummyData.find((room) => room._id === id);
+    const room = rooms.find((room) => room._id === id);
     room && setRoom(room);
     room && setMainImage(room.images[0]);
-  }, []);
+  }, [rooms]);
+
+  // console.log(room);
+
   return (
     room && (
       <div className="py-28 md:py-36 px-4 md:px-16 lg:px-24 xl:px-32">
@@ -36,7 +101,7 @@ const RoomDetails = () => {
         </div>
 
         <div className="flex items-center gap-2 text-gray-500 mt-2">
-          <img src={assets.locationIcon} alt="location-Icon" />
+          <FaLocationDot />
           <span>{room.hotel.address}</span>
         </div>
 
@@ -70,32 +135,35 @@ const RoomDetails = () => {
               Experience the Luxary Like Never Before
             </h1>
             <div className="flex flex-wrap items-center gap-4 mt-4 mb-6">
-              {room.amenities.map((item, index) => (
-                <div
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-200"
-                  key={index}
-                >
-                  <img
-                    src={facilityIcons[item]}
-                    alt={item}
-                    className="
-                            h-5 w-5"
-                  />
-                  <p className="text-xs">{item}</p>
-                </div>
-              ))}
+              {room.amenities.map((item, index) => {
+                const Icon = facilityIcons[item];
+                return (
+                  <div
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-200"
+                    key={index}
+                  >
+                    {Icon && <Icon className="h-5 w-5 text-gray-600" />}
+                    <p className="text-xs">{item}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <p className="font-medium text-2xl">${room.pricePerNight}/night</p>
         </div>
 
-        <form className="flex flex-col md:flex-row mt-16 items-start md:items-center justify-between bg-white shadow-[0px_0px_20px_rgba(0,0,0,0.15)] p-6 rounded-xl mx-auto max-w-6xl">
+        <form
+          onSubmit={onSubmitHandler}
+          className="flex flex-col md:flex-row mt-16 items-start md:items-center justify-between bg-white shadow-[0px_0px_20px_rgba(0,0,0,0.15)] p-6 rounded-xl mx-auto max-w-6xl"
+        >
           <div className="flex flex-col flex-wrap md:flex-row items-start md:items-center gap-4 md:gap-10 text-gray-500">
             <div className="flex flex-col">
               <label htmlFor="checkInDate" className="font-medium">
                 Check-In
               </label>
               <input
+                onChange={(e) => setCheckInDate(e.target.value)}
+                min={new Date().toISOString().split("T")[0]}
                 type="date"
                 id="checkInDate"
                 placeholder="Check-In"
@@ -109,6 +177,9 @@ const RoomDetails = () => {
                 Check-Out
               </label>
               <input
+                onChange={(e) => setCheckOutDate(e.target.value)}
+                min={checkInDate}
+                disabled={!checkInDate}
                 type="date"
                 id="checkOutDate"
                 placeholder="Check-In"
@@ -122,6 +193,8 @@ const RoomDetails = () => {
                 Guests
               </label>
               <input
+                onChange={(e) => setGuests(e.target.value)}
+                value={guests}
                 type="number"
                 id="guests"
                 placeholder="0"
@@ -134,7 +207,7 @@ const RoomDetails = () => {
               className="bg-black text-white py-2 rounded-md active:scale-95 transition-all max-md:w-full max-md:mt-4 md:px-24 md:py-3
               text-base cursor-pointer hover:bg-gray-800 "
             >
-              Check Availability
+              {isAvailable ? "Book Now" : "Check Availability"}
             </button>
           </div>
         </form>
@@ -168,7 +241,7 @@ const RoomDetails = () => {
         <div className="flex flex-col items-center gap-4">
           <div className="flex gap-4">
             <img
-              src={room.hotel.owner.image}
+              src={room.image}
               alt="owner"
               className="w-14 h-14 rounded-full md:h-18 md:w-18"
             />

@@ -1,11 +1,39 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Title from "../components/Title";
-import { assets, userBookingsDummyData } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
+import { useEffect } from "react";
+import { FaLocationDot } from "react-icons/fa6";
+import { IoPersonSharp } from "react-icons/io5";
 
 const MyBooking = () => {
-  const [bookings, setBookings] = useState(userBookingsDummyData);
+  const { axios, getToken, user } = useAppContext();
+  const [bookings, setBookings] = useState([]);
 
-  console.log(bookings);
+  const fetchUserBookings = async () => {
+    try {
+      const { data } = await axios.get("/api/bookings/user", {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
+      // console.log("Booking", data);
+
+      if (data.success) {
+        setBookings(data.bookings);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchUserBookings();
+    }
+  }, [user]);
+  // console.log(bookings);
 
   return (
     <div className="py-28 md:pb-35 md:pt-32 px-4 md:px-16 lg:px-24 xl:px-32">
@@ -33,18 +61,18 @@ const MyBooking = () => {
               />
               <div className="flex flex-col gap-1.5 max-md:mt-3 min-md:ml-4">
                 <p className="font-serif text-2xl">
-                  {booking.hotel[0].name}
+                  {booking.hotel.name}
                   <span className="font-serif text-sm">
                     {" "}
                     ({booking.room.roomType})
                   </span>
                 </p>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <img src={assets.locationIcon} alt="location-icon" />
-                  <span>{booking.hotel[0].address}</span>
+                  <FaLocationDot />
+                  <span>{booking.hotel.address}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <img src={assets.guestsIcon} alt="guest-icon" />
+                  <IoPersonSharp />
                   <span>Guests: {booking.guests}</span>
                 </div>
                 <p className="text-sm text-gray-500">
