@@ -1,4 +1,3 @@
-import { roomsDummyData } from "../assets/assets";
 import { useSearchParams } from "react-router-dom";
 import StarRating from "../components/StarRating";
 import { facilityIcons } from "../assets/assets";

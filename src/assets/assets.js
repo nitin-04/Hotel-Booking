@@ -75,7 +75,7 @@ export const assets = {
   totalRevenueIcon,
 };
 
-export const cities = ["Dubai", "Singapore", "New York", "London"];
+export const cities = ["Delhi", "Kolkata", "Mumbai", "Chennai"];
 
 export const exclusiveOffers = [
   {
