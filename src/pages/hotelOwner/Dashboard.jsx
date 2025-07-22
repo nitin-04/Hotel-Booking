@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Title from "../../components/Title";
-import { assets, dashboardDummyData } from "../../assets/assets";
+import { dashboardDummyData } from "../../assets/assets";
+import { MdCollections } from "react-icons/md";
+import { FaRupeeSign } from "react-icons/fa";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(dashboardDummyData);
 
-  console.log(dashboardData);
+  // console.log(dashboardData);
 
   return (
     <div>
@@ -17,11 +19,7 @@ const Dashboard = () => {
       />
       <div className="flex gap-4 my-8">
         <div className="border bg-blue-50 border-blue-50 rounded  flex  p-4 pr-8">
-          <img
-            src={assets.totalBookingIcon}
-            className="max-sm:hidden h-10"
-            alt="totalBookingIcon"
-          />
+          <MdCollections className="max-sm:hidden h-10" />
           <div className="flex flex-col sm:ml-4 font-medium">
             <p className="text-gray-800 text-lg">Total Bookings</p>
             <p className="text-neutral-400 text-base">
@@ -31,11 +29,8 @@ const Dashboard = () => {
         </div>
 
         <div className="border bg-blue-50 border-blue-50 rounded  flex  p-4 pr-8">
-          <img
-            src={assets.totalRevenueIcon}
-            className="max-sm:hidden h-10"
-            alt="totalBookingIcon"
-          />
+          <FaRupeeSign className="max-sm:hidden h-10" />
+
           <div className="flex flex-col sm:ml-4 font-medium">
             <p className="text-gray-800 text-lg">Total Revenue</p>
             <p className="text-neutral-400 text-base">

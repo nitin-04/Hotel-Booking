@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Title from "../../components/Title";
-import { assets } from "../../assets/assets";
+import { IoMdCloudUpload } from "react-icons/io";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const AddRoom = () => {
+  const { axios, getToken } = useAppContext();
+
   const [images, setImages] = useState({
     1: null,
     2: null,
@@ -22,8 +26,69 @@ const AddRoom = () => {
     },
   });
 
+  const [loading, setLoading] = useState(false);
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    if (
+      !inputs.roomType ||
+      !inputs.pricePerNight ||
+      !inputs.amenities ||
+      !Object.values(images).some((image) => image)
+    ) {
+      toast.error("Please fill in all the required fields");
+      return;
+    }
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("roomType", inputs.roomType);
+      formData.append("pricePerNight", inputs.pricePerNight);
+      const amenities = Object.keys(inputs.amenities).filter(
+        (key) => inputs.amenities[key]
+      );
+      formData.append("amenities", JSON.stringify(amenities));
+      Object.keys(images).forEach((key) => {
+        images[key] && formData.append("images", images[key]);
+      });
+
+      const { data } = await axios.post("/api/rooms/", formData, {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
+      // console.log("Data", data);
+
+      if (data.success) {
+        toast.success(data.message);
+        setInputs({
+          roomType: "",
+          pricePerNight: 0,
+          amenities: {
+            "Room Service": false,
+            "Free WiFi": false,
+            "Mountain View": false,
+            "Pool Access": false,
+            "Breakfast Included": false,
+          },
+        });
+        setImages({
+          1: null,
+          2: null,
+          3: null,
+          4: null,
+        });
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form>
+    <form onSubmit={onSubmitHandler}>
       <Title
         align="left"
         title="Add Room"
@@ -34,15 +99,18 @@ const AddRoom = () => {
       <div className="grid grid-cols-2 gap-4 sm:flex my-2 flex-wrap">
         {Object.keys(images).map((key) => (
           <label htmlFor={`roomImages${key}`} key={key}>
-            <img
-              src={
-                images[key]
-                  ? URL.createObjectURL(images[key])
-                  : assets.uploadArea
-              }
-              alt="RoomImage"
-              className="max-h-13 cursor-pointer opacity-80"
-            />
+            <div className="w-32 h-32 border border-dashed border-gray-300 flex items-center justify-center rounded-md cursor-pointer overflow-hidden">
+              {images[key] ? (
+                <img
+                  src={URL.createObjectURL(images[key])}
+                  alt="RoomImage"
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <IoMdCloudUpload className="text-4xl text-gray-800" />
+              )}
+            </div>
+
             <input
               type="file"
               accept="image/*"
@@ -111,8 +179,11 @@ const AddRoom = () => {
         ))}
       </div>
 
-      <button className="bg-indigo-500 text-white px-4 py-2 rounded mt-4 cursor-pointer">
-        Add Room
+      <button
+        className="bg-indigo-500 text-white px-4 py-2 rounded mt-4 cursor-pointer"
+        disabled={loading}
+      >
+        {loading ? "Adding Room..." : "Add Room"}
       </button>
     </form>
   );
