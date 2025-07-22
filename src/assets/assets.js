@@ -37,7 +37,9 @@ import listIcon from "./listIcon.svg";
 import uploadArea from "./uploadArea.svg";
 import totalBookingIcon from "./totalBookingIcon.svg";
 import totalRevenueIcon from "./totalRevenueIcon.svg";
-
+import { FaWifi } from "react-icons/fa";
+import { MdFreeBreakfast, MdOutlinePool, MdRoomService } from "react-icons/md";
+import { GiMountaintop } from "react-icons/gi";
 export const assets = {
   logo,
   searchIcon,
@@ -140,11 +142,11 @@ export const testimonials = [
 
 // Facility Icon
 export const facilityIcons = {
-  "Free WiFi": assets.freeWifiIcon,
-  "Free Breakfast": assets.freeBreakfastIcon,
-  "Room Service": assets.roomServiceIcon,
-  "Mountain View": assets.mountainIcon,
-  "Pool Access": assets.poolIcon,
+  "Free WiFi": FaWifi,
+  "Free Breakfast": MdFreeBreakfast,
+  "Room Service": MdRoomService,
+  "Mountain View": GiMountaintop,
+  "Pool Access": MdOutlinePool,
 };
 
 // For Room Details Page
