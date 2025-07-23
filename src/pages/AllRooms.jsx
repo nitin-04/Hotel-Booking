@@ -191,7 +191,7 @@ const AllRooms = () => {
                 })}
               </div>
               <p className="text-gray-500 text-xl font-medium">
-                ${room.pricePerNight}/night
+                ₹{room.pricePerNight}/night
               </p>
             </div>
           </div>

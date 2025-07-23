@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const RoomDetails = () => {
   const { id } = useParams();
-  const { rooms, getToken, axios, navigate } = useAppContext();
+  const { rooms, getToken, axios, navigate, user } = useAppContext();
   const [room, setRoom] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const [checkInDate, setCheckInDate] = useState(null);
@@ -47,6 +47,9 @@ const RoomDetails = () => {
 
   const onSubmitHandler = async (e) => {
     try {
+      // if (!user) {
+      //   toast.error("Please login to book a room");
+      // }
       e.preventDefault();
       if (!isAvailable) {
         return checkAvailability();
@@ -67,11 +70,12 @@ const RoomDetails = () => {
           navigate("/my-bookings");
           scrollTo(0, 0);
         } else {
-          toast.error(data.message);
+          // toast.error(data.message);
         }
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Please login to book a room");
+      // toast.error(error.message);
     }
   };
 
@@ -149,7 +153,7 @@ const RoomDetails = () => {
               })}
             </div>
           </div>
-          <p className="font-medium text-2xl">${room.pricePerNight}/night</p>
+          <p className="font-medium text-2xl">₹{room.pricePerNight}/night</p>
         </div>
 
         <form
@@ -240,11 +244,11 @@ const RoomDetails = () => {
         </div>
         <div className="flex flex-col items-center gap-4">
           <div className="flex gap-4">
-            <img
+            {/* <img
               src={room.image}
-              alt="owner"
+              alt="Mr.Sandeep"
               className="w-14 h-14 rounded-full md:h-18 md:w-18"
-            />
+            /> */}
             <div>
               <p className="text-lg md:text-xl">Hosted by {room.hotel.name}</p>
               <div className="flex items-center gap-1 mt-1">

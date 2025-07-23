@@ -4,6 +4,7 @@ import { useAppContext } from "../context/AppContext";
 import { useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 const MyBooking = () => {
   const { axios, getToken, user } = useAppContext();
@@ -21,6 +22,34 @@ const MyBooking = () => {
       if (data.success) {
         setBookings(data.bookings);
       } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handlePayment = async (bookingId) => {
+    try {
+      const { data } = await axios.post(
+        "/api/bookings/stripe-payment",
+        { bookingId },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        }
+      );
+      console.log(data);
+
+      if (data.success) {
+        window.location.href = data.url;
+        console.log("window", window.location.href);
+
+        // toast.success(data.message);
+      } else {
+        console.log(data);
+
         toast.error(data.message);
       }
     } catch (error) {
@@ -76,7 +105,7 @@ const MyBooking = () => {
                   <span>Guests: {booking.guests}</span>
                 </div>
                 <p className="text-sm text-gray-500">
-                  Total: ${booking.totalPrice}
+                  Total: ₹{booking.totalPrice}
                 </p>
               </div>
             </div>
@@ -112,7 +141,10 @@ const MyBooking = () => {
                 </p>
               </div>
               {!booking.isPaid && (
-                <button className="text-sm text-blue-500 mt-2 px-4 py-2 border border-gray-400 rounded-full hover:bg-gray-100 transition-all cursor-pointer">
+                <button
+                  onClick={() => handlePayment(booking._id)}
+                  className="text-sm text-blue-500 mt-2 px-4 py-2 border border-gray-400 rounded-full hover:bg-gray-100 transition-all cursor-pointer"
+                >
                   Pay Now
                 </button>
               )}
