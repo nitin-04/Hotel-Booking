@@ -108,11 +108,11 @@ const Navbar = () => {
 
       {/* Desktop Right */}
       <div className="hidden md:flex items-center gap-4">
-        <FaSearch
+        {/* <FaSearch
           className={`${
             isScrolled && "invert"
           } h-7 transition-all duration-500 cursor-pointer gap-2`}
-        />
+        /> */}
 
         {user ? (
           <UserButton>

@@ -95,7 +95,7 @@ const AddRoom = () => {
         font="crimson-text-regular"
         subtitle="Fill in the details carefully and accurate room details, pricing and amenities, to enhance the user booking experience."
       />
-      <p className="text-gray-500 mt-10">Images</p>
+      <p className="text-gray-800 mt-10">Upload Room Images Here</p>
       <div className="grid grid-cols-2 gap-4 sm:flex my-2 flex-wrap">
         {Object.keys(images).map((key) => (
           <label htmlFor={`roomImages${key}`} key={key}>
@@ -126,7 +126,7 @@ const AddRoom = () => {
 
       <div className="w-full flex max-sm:flex-col sm:gap-4 mt-4">
         <div className="flex-1/2 max-w-48">
-          <p className="text-gray-500 mt-4">Room Type</p>
+          <p className="text-gray-800 mt-4"> Room Type</p>
           <select
             value={inputs.roomType}
             onChange={(e) => setInputs({ ...inputs, roomType: e.target.value })}
@@ -157,9 +157,13 @@ const AddRoom = () => {
       </div>
 
       <p className="text-gray-800 mt-4">Amenities</p>
-      <div className="flex flex-wrap flex-col mt-1 text-gray-400 max-w-sm">
+      <div className="flex flex-wrap flex-col mt-1 text-gray-800 gap-2 space-x-10 max-w-sm">
         {Object.keys(inputs.amenities).map((amenity, index) => (
-          <div key={index}>
+          <label
+            key={index}
+            htmlFor={`amenities${index + 1}`}
+            className="flex items-center gap-2"
+          >
             <input
               type="checkbox"
               id={`amenities${index + 1}`}
@@ -174,8 +178,8 @@ const AddRoom = () => {
                 })
               }
             />
-            <label htmlFor={`amenities${index + 1}`}>{amenity}</label>
-          </div>
+            {amenity}
+          </label>
         ))}
       </div>
 

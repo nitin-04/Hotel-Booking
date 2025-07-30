@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 
 const RecommendedHotels = () => {
   const { rooms, searchedCities } = useAppContext();
-  console.log("recommended", rooms);
-  console.log("recommended citites", searchedCities);
+  // console.log("recommended", rooms);
+  // console.log("recommended citites", searchedCities);
 
   const [recommended, setRecommended] = useState([]);
 
@@ -30,7 +30,7 @@ const RecommendedHotels = () => {
           subTitle="Discover breathtaking places handpicked to inspire your next unforgettable escape."
         />
 
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-20">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] justify-items-center gap-2 mt-20 w-full">
           {recommended.slice(0, 4).map((room, index) => (
             <HotelCard key={room._id} room={room} index={index} />
           ))}

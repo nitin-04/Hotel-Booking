@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 
@@ -8,9 +7,13 @@ const HotelCard = ({ room, index }) => {
       to={"/rooms/" + room._id}
       onClick={() => scrollTo(0, 0)}
       key={room._id}
-      className="relative max-w-70 w-full rounded-xl overflow-hidden bg-white text-gray-500 shadow transition duration-300 hover:shadow-lg hover:scale-[1.02]"
+      className="relative w-full sm:w-80 rounded-xl overflow-hidden bg-white text-gray-500 shadow transition duration-300 hover:shadow-lg hover:scale-[1.02]"
     >
-      <img src={room.images[0]} alt="RoomImage" />
+      <img
+        src={room.images[0]}
+        alt="RoomImage"
+        className="w-full h-48 object-cover"
+      />
       {index % 2 === 0 && (
         <p className="px-3 py-1 absolute top-3 left-3 text-xs bg-white text-gray-800 font-medium rounded-full">
           Best Seller
@@ -31,7 +34,9 @@ const HotelCard = ({ room, index }) => {
         </div>
         <div className="flex items-center justify-between mt-4">
           <p>
-            <span className="text-xl text-gray-800">${room.pricePerNight}</span>
+            <span className="text-xl text-gray-800">
+              ₹ {room.pricePerNight}
+            </span>
             /night
           </p>
           <button className="px-4 py-2 text-sm font-medium border border-gray-300 rounded hover:bg-gray-50 transition-all cursor-pointer">
